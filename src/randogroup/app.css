@@ -1,0 +1,27 @@
+Screen {
+    align: center middle;
+}
+
+TextArea {
+    width: 80%;
+    height: 10;
+    margin: 1;
+}
+
+Input {
+    width: 80%;
+    margin: 1;
+}
+
+Button {
+    width: 80%;
+    margin: 1;
+}
+
+#results {
+    width: 80%;
+    height: auto;
+    margin: 1;
+    padding: 1;
+    border: round white;
+}
