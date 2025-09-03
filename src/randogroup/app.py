@@ -1,7 +1,7 @@
-from textual.app import App, ComposeResult
-from textual.widgets import Button, Footer, Header, Static, TextArea, Input
-from textual.containers import ScrollableContainer
 import random
+
+from textual.app import App, ComposeResult
+from textual.widgets import Button, Footer, Header, Input, Static, TextArea
 
 
 class RandogroupApp(App):
