@@ -2,6 +2,22 @@ Screen {
     align: center middle;
 }
 
+#mode_selection_container {
+    align: center middle;
+    width: 80%;
+}
+
+#group_assignment_label,
+#student_draw_label {
+    width: auto;
+    margin: 1;
+}
+
+#mode_switch {
+    width: auto;
+    margin: 1;
+}
+
 TextArea {
     width: 80%;
     height: 10;
