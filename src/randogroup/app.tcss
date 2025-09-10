@@ -1,16 +1,15 @@
-Screen {
-    align: center middle;
-}
+/* vim: set filetype=css : */
 
+/* mode selection */
 #mode_selection_container {
     align: center middle;
-    width: 80%;
+    height: 4;
 }
 
 #group_assignment_label,
 #student_draw_label {
     width: auto;
-    margin: 1;
+    margin: 2;
 }
 
 #mode_switch {
@@ -18,26 +17,60 @@ Screen {
     margin: 1;
 }
 
-TextArea {
-    width: 80%;
-    height: 10;
+/* student lists */
+TextArea,
+Input{
     margin: 1;
+    padding: 0;
 }
 
-Input {
-    width: 80%;
-    margin: 1;
+#student_list_container{
+    width: 1fr;
+    border: round white;
 }
 
-Button {
-    width: 80%;
-    margin: 1;
+#student_list_select {
+    margin: 0 0 1 0;
 }
 
-#results {
-    width: 80%;
+#list_name_input{
     height: auto;
+}
+
+#students{
+    height: 1fr;
+}
+
+#student_list_buttons_container {
+    height: auto;
+    margin: 0 1 0 1;
+}
+
+#save_button {
+    margin-right: 3;
+    margin-left: 1;
+    height: 3;
+}
+
+#number_input{
+    height: auto;
+}
+
+#run_container{
     margin: 1;
+    padding: 0 1;
+    height: auto;
+}
+
+#run_button{
+    height: 3;
+    width: 5;
+}
+
+/* results */
+#results {
+    width: 2fr;
+    height: 1fr;
     padding: 1;
     border: round white;
 }
