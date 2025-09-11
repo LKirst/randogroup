@@ -12,6 +12,8 @@ repos:
       args: [ "--config=pyproject.toml", "--fix" ]
     - id: ruff-format
 - repo: https://github.com/commitizen-tools/commitizen
-  rev: v3.31.0
+  rev: v4.9.1
   hooks:
     - id: commitizen
+    - id: commitizen-branch
+      stages: [pre-push]
