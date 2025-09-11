@@ -1,7 +1,7 @@
 import random
 
-from rich.console import Group as RichGroup
 from rich.panel import Panel
+from rich.table import Table
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Right, VerticalScroll
 from textual.widgets import (
@@ -53,7 +53,9 @@ class RandogroupApp(App):
                 with Horizontal(id="student_list_buttons_container"):
                     yield Button(chr(int("eb4b", 16)), id="save_button")
                     yield Button(chr(int("f01b4", 16)), id="delete_button")
-                yield Input(placeholder="Number", id="number_input", type="integer")
+                yield Input(
+                    placeholder="Number", id="number_input", type="integer", value="10"
+                )
                 with Right(id="run_container"):
                     yield Button(
                         chr(int("eb2c", 16)), id="run_button", variant="primary"
@@ -184,22 +186,39 @@ class RandogroupApp(App):
 
         groups = self.create_groups_logic(students, num_groups)
 
-        # Use Rich to create panels for each group
+        colors = [
+            "red3",
+            "green3",
+            "yellow3",
+            "dodger_blue2",
+        ]
+
+        # Create a Table grid and add two columns
+        grid = Table.grid(expand=True)
+        grid.add_column()
+        grid.add_column()
+
+        # Create a list of panels for each group
         panels = []
-        colors = ["red", "green", "blue", "yellow", "magenta", "cyan"]
         for i, group in enumerate(groups):
             panel = Panel(
-                f"[bold]Group {i + 1}:[/bold] {', '.join(group)}",
+                f"{', '.join(group)}",
                 title=f"Group {i + 1}",
                 border_style=colors[i % len(colors)],
             )
             panels.append(panel)
 
-        # Combine all panels into a single Rich Group
-        rich_group = RichGroup(*panels)
+        # Add the panels to the grid in rows of two
+        for i in range(0, len(panels), 2):
+            # Check if there is a second panel to create a full row
+            if i + 1 < len(panels):
+                grid.add_row(panels[i], panels[i + 1])
+            else:
+                # If there's an odd number of panels, add the last one by itself
+                grid.add_row(panels[i])
 
-        # Update the results with the Rich Group
-        self.query_one("#results", Static).update(rich_group)
+        # Update the results panel with the new grid layout
+        self.query_one("#results", Static).update(grid)
 
     def create_groups_logic(
         self,
