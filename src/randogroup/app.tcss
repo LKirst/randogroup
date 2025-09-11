@@ -3,34 +3,24 @@
 /* mode selection */
 #mode_selection_container {
     align: center middle;
-    height: 4;
+    height: 3;
 }
 
 #group_assignment_label,
 #student_draw_label {
     width: auto;
-    margin: 2;
+    margin: 1;
 }
 
 #mode_switch {
     width: auto;
-    margin: 1;
+    margin: 0;
 }
 
 /* student lists */
-TextArea,
-Input{
-    margin: 1;
-    padding: 0;
-}
-
 #student_list_container{
     width: 1fr;
     border: round white;
-}
-
-#student_list_select {
-    margin: 0 0 1 0;
 }
 
 #list_name_input_container{
@@ -55,13 +45,11 @@ Input{
 
 #student_list_buttons_container {
     height: auto;
-    margin: 0 1 0 1;
+    margin-left: 1;
 }
 
 #save_button {
-    margin-right: 3;
-    margin-left: 1;
-    height: 3;
+    margin-right: 1;
 }
 
 #number_input{
@@ -69,14 +57,8 @@ Input{
 }
 
 #run_container{
-    margin: 1;
     padding: 0 1;
     height: auto;
-}
-
-#run_button{
-    height: 3;
-    width: 5;
 }
 
 /* results */
