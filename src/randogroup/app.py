@@ -48,7 +48,9 @@ class RandogroupApp(App):
                     id="student_list_select",
                     prompt="New student list",
                 )
-                yield Input(placeholder="List name", id="list_name_input")
+                with Horizontal(id="list_name_input_container"):
+                    yield Input(placeholder="List name", id="list_name_input")
+                    yield Static("", id="student_count")
                 yield TextArea(id="students", text="")
                 with Horizontal(id="student_list_buttons_container"):
                     yield Button(chr(int("eb4b", 16)), id="save_button")
@@ -74,6 +76,21 @@ class RandogroupApp(App):
         students = self.student_lists.get(list_name, [])
         self.query_one("#students", TextArea).text = "\n".join(students)
         self.query_one("#list_name_input", Input).value = list_name
+        self.update_student_count()
+
+    def update_student_count(self) -> None:
+        """Update the student count label based on the content of the TextArea."""
+        students_area = self.query_one("#students", TextArea)
+        # Count non-empty lines
+        student_count = len(
+            [line for line in students_area.text.splitlines() if line.strip()]
+        )
+        self.query_one("#student_count", Static).update(f"({student_count})")
+
+    def on_text_area_changed(self, event: TextArea.Changed) -> None:
+        """Event handler called when the text in the TextArea changes."""
+        if event.text_area.id == "students":
+            self.update_student_count()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Event handler called when a button is pressed."""
@@ -101,6 +118,7 @@ class RandogroupApp(App):
             else:
                 self.query_one("#students", TextArea).text = ""
                 self.query_one("#list_name_input", Input).value = ""
+                self.update_student_count()
 
     def save(self) -> None:
         """Save the changes to the student lists."""

@@ -33,8 +33,20 @@ Input{
     margin: 0 0 1 0;
 }
 
+#list_name_input_container{
+  height: auto;
+}
+
 #list_name_input{
     height: auto;
+    width: 1fr;
+}
+
+#student_count{
+  width: auto;
+  height: 100%;
+  margin: 1;
+  content-align: center middle;
 }
 
 #students{
