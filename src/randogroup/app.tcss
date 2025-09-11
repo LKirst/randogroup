@@ -68,3 +68,7 @@
     padding: 1;
     border: round white;
 }
+
+.hidden {
+    display: none;
+}

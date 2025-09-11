@@ -30,6 +30,11 @@ class RandogroupApp(App):
     """A Textual app to create random groups."""
 
     CSS_PATH = "app.tcss"
+    BINDINGS = [
+        ("ctrl+l", "maximize_students", "Maximize Students"),
+        ("ctrl+r", "maximize_results", "Maximize Results"),
+        ("ctrl+a", "show_all", "Show All"),
+    ]
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
@@ -249,6 +254,21 @@ class RandogroupApp(App):
         for i, student in enumerate(students):
             groups[i % num_groups].append(student)
         return groups
+
+    def action_maximize_students(self) -> None:
+        """Maximize the student list container."""
+        self.query_one("#student_list_container").remove_class("hidden")
+        self.query_one("#results").add_class("hidden")
+
+    def action_maximize_results(self) -> None:
+        """Maximize the results container."""
+        self.query_one("#student_list_container").add_class("hidden")
+        self.query_one("#results").remove_class("hidden")
+
+    def action_show_all(self) -> None:
+        """Show both containers."""
+        self.query_one("#student_list_container").remove_class("hidden")
+        self.query_one("#results").remove_class("hidden")
 
 
 def randogrouper():
