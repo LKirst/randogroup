@@ -1,4 +1,5 @@
 import random
+from typing import ClassVar
 
 from rich.panel import Panel
 from rich.table import Table
@@ -30,7 +31,7 @@ class RandogroupApp(App):
     """A Textual app to create random groups."""
 
     CSS_PATH = "app.tcss"
-    BINDINGS = [
+    BINDINGS: ClassVar = [
         ("ctrl+l", "maximize_students", "Maximize Students"),
         ("ctrl+r", "maximize_results", "Maximize Results"),
         ("ctrl+a", "show_all", "Show All"),
@@ -68,8 +69,8 @@ class RandogroupApp(App):
                         chr(int("eb2c", 16)), id="run_button", variant="primary"
                     )
 
-            # TODO: make the results scrollable
-            yield Static(id="results")
+            with VerticalScroll(id="results"):
+                yield Static(id="results-content")
 
     def on_select_changed(self, event: Select.Changed) -> None:
         """Event handler called when a select option is changed."""
@@ -154,19 +155,19 @@ class RandogroupApp(App):
             number_input = self.query_one("#number_input", Input)
             num_to_draw = int(number_input.value)
         except (ValueError, TypeError):
-            self.query_one("#results", Static).update(
+            self.query_one("#results-content", Static).update(
                 "[bold red]Please enter a valid number.[/bold red]"
             )
             return
 
         if not students:
-            self.query_one("#results", Static).update(
+            self.query_one("#results-content", Static).update(
                 "[bold red]Please enter some student names.[/bold red]"
             )
             return
 
         if num_to_draw <= 0:
-            self.query_one("#results", Static).update(
+            self.query_one("#results-content", Static).update(
                 "[bold red]Number to draw must be greater than 0.[/bold red]"
             )
             return
@@ -175,7 +176,7 @@ class RandogroupApp(App):
 
         results_str = f"[bold]Drawn students:[/bold] {', '.join(drawn_students)}"
 
-        self.query_one("#results", Static).update(results_str)
+        self.query_one("#results-content", Static).update(results_str)
 
     def draw_students_logic(self, students: list[str], num_to_draw: int) -> list[str]:
         """The logic to draw students."""
@@ -190,19 +191,19 @@ class RandogroupApp(App):
             num_groups_input = self.query_one("#number_input", Input)
             num_groups = int(num_groups_input.value)
         except (ValueError, TypeError):
-            self.query_one("#results", Static).update(
+            self.query_one("#results-content", Static).update(
                 "[bold red]Please enter a valid number of groups.[/bold red]"
             )
             return
 
         if not students:
-            self.query_one("#results", Static).update(
+            self.query_one("#results-content", Static).update(
                 "[bold red]Please enter some student names.[/bold red]"
             )
             return
 
         if num_groups <= 0:
-            self.query_one("#results", Static).update(
+            self.query_one("#results-content", Static).update(
                 "[bold red]Number of groups must be greater than 0.[/bold red]"
             )
             return
@@ -241,7 +242,7 @@ class RandogroupApp(App):
                 grid.add_row(panels[i])
 
         # Update the results panel with the new grid layout
-        self.query_one("#results", Static).update(grid)
+        self.query_one("#results-content", Static).update(grid)
 
     def create_groups_logic(
         self,
