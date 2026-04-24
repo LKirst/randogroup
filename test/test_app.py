@@ -52,3 +52,15 @@ def test_create_groups_more_groups_than_students(app):
 
     # Check that some groups are empty
     assert any(len(group) == 0 for group in groups)
+
+
+def test_create_groups_deterministic(app):
+    """Test that creating groups with a seed is deterministic."""
+    students = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank"]
+    num_groups = 3
+    seed = "test-seed"
+
+    groups_1 = app.create_groups_logic(list(students), num_groups, seed=seed)
+    groups_2 = app.create_groups_logic(list(students), num_groups, seed=seed)
+
+    assert groups_1 == groups_2

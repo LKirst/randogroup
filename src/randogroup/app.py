@@ -61,9 +61,14 @@ class RandogroupApp(App):
                 with Horizontal(id="student_list_buttons_container"):
                     yield Button(chr(int("eb4b", 16)), id="save_button")
                     yield Button(chr(int("f01b4", 16)), id="delete_button")
-                yield Input(
-                    placeholder="Number", id="number_input", type="integer", value="10"
-                )
+                with Horizontal(id="number_seed_container"):
+                    yield Input(
+                        placeholder="Number",
+                        id="number_input",
+                        type="integer",
+                        value="10",
+                    )
+                    yield Input(placeholder="Seed (optional)", id="seed_input")
                 with Right(id="run_container"):
                     yield Button(
                         chr(int("eb2c", 16)), id="run_button", variant="primary"
@@ -172,15 +177,19 @@ class RandogroupApp(App):
             )
             return
 
-        drawn_students = self.draw_students_logic(students, num_to_draw)
+        seed = self.query_one("#seed_input", Input).value
+        drawn_students = self.draw_students_logic(students, num_to_draw, seed=seed)
 
         results_str = f"[bold]Drawn students:[/bold] {', '.join(drawn_students)}"
 
         self.query_one("#results-content", Static).update(results_str)
 
-    def draw_students_logic(self, students: list[str], num_to_draw: int) -> list[str]:
+    def draw_students_logic(
+        self, students: list[str], num_to_draw: int, seed: str | None = None
+    ) -> list[str]:
         """The logic to draw students."""
-        return random.sample(students, min(num_to_draw, len(students)))
+        rng = random.Random(seed) if seed else random
+        return rng.sample(students, min(num_to_draw, len(students)))
 
     def create_groups(self) -> None:
         """Create the groups and display them."""
@@ -208,7 +217,8 @@ class RandogroupApp(App):
             )
             return
 
-        groups = self.create_groups_logic(students, num_groups)
+        seed = self.query_one("#seed_input", Input).value
+        groups = self.create_groups_logic(students, num_groups, seed=seed)
 
         colors = [
             "red3",
@@ -248,9 +258,11 @@ class RandogroupApp(App):
         self,
         students: list[str],
         num_groups: int,
+        seed: str | None = None,
     ) -> list[list[str]]:
         """The logic to create the groups."""
-        random.shuffle(students)
+        rng = random.Random(seed) if seed else random
+        rng.shuffle(students)
         groups = [[] for _ in range(num_groups)]
         for i, student in enumerate(students):
             groups[i % num_groups].append(student)

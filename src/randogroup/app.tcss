@@ -52,8 +52,14 @@
     margin-right: 1;
 }
 
-#number_input{
+#number_seed_container {
     height: auto;
+}
+
+#number_input,
+#seed_input {
+    height: auto;
+    width: 1fr;
 }
 
 #run_container{

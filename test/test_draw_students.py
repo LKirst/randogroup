@@ -35,3 +35,15 @@ def test_draw_more_students_than_available(app):
 
     assert len(drawn_students) == len(students)
     assert set(drawn_students) == set(students)
+
+
+def test_draw_students_deterministic(app):
+    """Test that drawing students with a seed is deterministic."""
+    students = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank"]
+    num_to_draw = 3
+    seed = "test-seed"
+
+    drawn_1 = app.draw_students_logic(students, num_to_draw, seed=seed)
+    drawn_2 = app.draw_students_logic(students, num_to_draw, seed=seed)
+
+    assert drawn_1 == drawn_2
